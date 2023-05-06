@@ -1,8 +1,13 @@
 function Account (props) { // props
-  const { account: { id, balance }, isVisible, toggleAccountList } = props
+  const { account: { id, balance }, onSelectAccount, selectedAccount } = props
 
-  if (!isVisible) {
-    return null
+  // if (!isVisible) {
+  //   return null
+  // }
+
+  const onSelect = () => {
+    console.log('select account!', id)
+    onSelectAccount(props.account)
   }
 
   return (
@@ -11,6 +16,8 @@ function Account (props) { // props
       justifyContent: 'space-between',
       border: '1px solid white',
       padding: '20px',
+      backgroundColor: selectedAccount && selectedAccount.id === id ? 'white' : 'black',
+      'color': selectedAccount && selectedAccount.id === id ? 'black' : 'white'
     }}>
       <div>
         <span>Account ID:</span>
@@ -20,9 +27,7 @@ function Account (props) { // props
         <span>Balance:</span>
         <span>{balance}</span>
       </div>
-      <button 
-      onClick={toggleAccountList}
-      >{isVisible ? 'Hide' : 'Show'}</button>
+      <button onClick={onSelect}>{selectedAccount && selectedAccount.id === id ? 'Selected' : 'Select'}</button>
     </div>
   )
 }
