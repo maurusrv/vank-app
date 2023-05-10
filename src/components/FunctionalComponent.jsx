@@ -1,26 +1,38 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
-const FunctionalComponent = (props) => {
-  // const { name, onClick } = props
+const FunctionalComponent = () => {
 
   console.log('FunctionalComponent is called.')
 
+  // const [click, setClick] = useState(0)
   const [count, setCount] = useState(0)
 
+  const [colorIndex, setColorIndex] = useState(0)
+  const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet']
+
+  // useEffect(() => {
+  //   console.log('Hello, Hooks!')
+  // })
+
+  // Side-effect Trigger of State Change
+  useEffect(() => { 
+    setColorIndex(count % 7) 
+  }, [count])
+
+  // Event-Handler => Direct Trigger of State Change
   const onAddCount = () => {
-    setCount(count + 1)
+    // setClick(click + 1)
+    // setTimeout(() => { // this simulates expensive process
+      // setCount(count + 1)
+      setCount((prevCount) => prevCount + 1)
+    // }, 5000)
   }
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column'}}>
-      <span>UI change is directly state variable - </span>
+      {/* <span>Clicks: {click}</span> */}
       <span>Count: {count}</span> 
-      <span>UI change is derived from state variable - </span> 
-      {count === 5 && (
-        <span>Only show this message if count is 5</span>
-      )}
-
-      <button onClick={onAddCount}>Add count</button>
+      <button style={{ backgroundColor: colors[colorIndex] }} onClick={onAddCount}>Add count</button>
     </div>
   )
 }
