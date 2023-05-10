@@ -1,9 +1,9 @@
-import Form from './components/Form'
+import FunctionalComponent from './components/FunctionalComponent'
 
 function App() {
   return (
     <main>
-      <Form />
+      <FunctionalComponent />
     </main>
   )
 }
