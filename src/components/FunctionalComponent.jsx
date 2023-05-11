@@ -1,38 +1,33 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
-const FunctionalComponent = () => {
+// function FunctionalComponent () {
+const FunctionalComponent = (props) => {
+  const { username } = props
+  const [count, setCount] = useState(0)  
 
-  console.log('FunctionalComponent is called.')
 
-  // const [click, setClick] = useState(0)
-  const [count, setCount] = useState(0)
+  // Hooks to demonstrate lifecycles can be combined because in functional, the focus is WHAT STATE should a side effect depend on?
+  useEffect(() => {
+    console.log('F: componentDidMount!')
+  }, [])
 
-  const [colorIndex, setColorIndex] = useState(0)
-  const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet']
-
-  // useEffect(() => {
-  //   console.log('Hello, Hooks!')
-  // })
-
-  // Side-effect Trigger of State Change
-  useEffect(() => { 
-    setColorIndex(count % 7) 
+  useEffect(() => {
+    console.log('F: componentDidUpdate!')
   }, [count])
 
-  // Event-Handler => Direct Trigger of State Change
-  const onAddCount = () => {
-    // setClick(click + 1)
-    // setTimeout(() => { // this simulates expensive process
-      // setCount(count + 1)
-      setCount((prevCount) => prevCount + 1)
-    // }, 5000)
-  }
+  useEffect(() => {
+    return () => {
+      console.log('componentWillUnmount!')
+    }
+  }, [])
+
+  const onClick = () => setCount(count + 1)
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column'}}>
-      {/* <span>Clicks: {click}</span> */}
-      <span>Count: {count}</span> 
-      <button style={{ backgroundColor: colors[colorIndex] }} onClick={onAddCount}>Add count</button>
+    <div style={{ flex: 1, border: '1px solid black', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '10px' }}>
+      <h6>Hello, {username}!</h6>
+      <h1>{count}</h1>
+      <button onClick={onClick}>Click me!</button>
     </div>
   )
 }
