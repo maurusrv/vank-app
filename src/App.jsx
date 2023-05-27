@@ -1,27 +1,23 @@
-import { useState } from 'react'
-import FunctionalComponent from './components/FunctionalComponent'
-import ClassicalComponent from './components/ClassicalComponent'
+import { useEffect, useState } from 'react'
+import AuthForm from "./components/AuthForm"
+import Dashboard from './components/Dashboard'
 
 function App() {
-  const [isFunctionalVisible, setIsFunctionalVisible] = useState(true)
-  const [isClassicalVisible, setIsClassicalVisible] = useState(true)
+  const [page, setPage] = useState('auth')
+  const [user, setUser] = useState(null)
+  const [headers, setHeaders] = useState({})
 
-  const toggleFunctional = () => setIsFunctionalVisible((prevState) => !prevState)
-  const toggleClassical = () => setIsClassicalVisible((prevState) => !prevState)
+  useEffect(() => {
+    console.log({
+      page,
+      user,
+    })
+  })
 
   return (
     <div>
-      <main style={{
-        display: 'flex',
-        justifyContent: 'space-between'
-      }}>
-        {isFunctionalVisible && <FunctionalComponent username="batman" />}
-        {isClassicalVisible ? <ClassicalComponent username="joker" /> : null}
-      </main>
-      <div style={{ display: 'flex', justifyContent: 'space-between'}}>
-        <button onClick={toggleFunctional}>Toggle Functional</button>
-        <button onClick={toggleClassical}>Toggle Classical</button>
-      </div>
+      {page === 'auth' && <AuthForm setPage={setPage} setUser={setUser} setHeaders={setHeaders} />}
+      {page === 'dash' && <Dashboard {...headers} />}
     </div>
   )
 }
